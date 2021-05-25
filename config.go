@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	PATH_FMT_CONFIGURE_LIST = "/api/configurations"
+	PATH_FMT_CONFIGURE_LIST = "/api/v2.0/configurations"
 )
 
 func (c *Client) ListConfigures(ctx context.Context) (map[string]interface{}, error) {

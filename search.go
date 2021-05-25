@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	PATH_FMT_SEARCH = "/api/search"
+	PATH_FMT_SEARCH = "/api/v2.0/search"
 )
 
 func (c *Client) Search(ctx context.Context, query string) (*models.SearchResult, error) {

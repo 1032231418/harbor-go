@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	PATH_FMT_REPO_LIST     = "/api/repositories"
-	PATH_FMT_REPOTAGS_LIST = "/api/repositories/%s/%s/tags"
-	PATH_FMT_REPOTAG       = "/api/repositories/%s/%s/tags/%s"
+	PATH_FMT_REPO_LIST     = "/api/v2.0/projects/%s/repositories"
+	PATH_FMT_REPOTAGS_LIST = "/api/v2.0/projects/%s/repositories/%s/%s/tags"
+	PATH_FMT_REPOTAG       = "/api/v2.0/projects/%s/repositories/%s/%s/tags/%s"
 )
 
 type RepoSortType = string
@@ -50,7 +50,7 @@ func (opt *RepoOption) Urls() url.Values {
 	return v
 }
 
-func (c *Client) ListRepos(ctx context.Context, project_id int64, opt *RepoOption) (int, []*models.Repo, error) {
+func (c *Client) ListRepos(ctx context.Context, project_name string, opt *RepoOption) (int, []*models.Repo, error) {
 	ret := make([]*models.Repo, 0)
 
 	var values url.Values
@@ -59,9 +59,10 @@ func (c *Client) ListRepos(ctx context.Context, project_id int64, opt *RepoOptio
 	} else {
 		values = make(map[string][]string)
 	}
-	values.Set("project_id", fmt.Sprintf("%d", project_id))
+	values.Set("project_name", fmt.Sprintf("%d", project_name))
 
-	path := PATH_FMT_REPO_LIST + "?" + values.Encode()
+	path := fmt.Sprintf(PATH_FMT_REPO_LIST, project_name)
+	path = path + "?" + values.Encode()
 	req, err := http.NewRequest(http.MethodGet, c.host+path, nil)
 	if err != nil {
 		return 0, ret, err
@@ -88,7 +89,7 @@ func (c *Client) ListReposByProjectName(ctx context.Context, name string) (total
 		return total, repos, err
 	}
 
-	return c.ListRepos(ctx, p.ProjectID, nil)
+	return c.ListRepos(ctx, p.Name, nil)
 }
 
 func (c *Client) ListRepoTags(ctx context.Context, project_name, repo_name string) ([]*models.TagDetail, error) {

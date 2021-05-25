@@ -13,7 +13,7 @@ func TestRepo(t *testing.T) {
 	}
 
 	// list project
-	total, repos, err := c.ListRepos(context.Background(), 143, &RepoOption{Name: "cmdb"})
+	total, repos, err := c.ListRepos(context.Background(), "test", &RepoOption{Name: "cmdb"})
 	if err != nil {
 		t.Fatal(err)
 	}

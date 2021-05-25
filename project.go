@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	PATH_FMT_PROJECT_LIST = "/api/projects"
-	PATH_FMT_PROJECT_GET  = "/api/projects/%d"
+	PATH_FMT_PROJECT_LIST = "/api/v2.0/projects"
+	PATH_FMT_PROJECT_GET  = "/api/v2.0/projects/%d"
 )
 
 type ProjectOption struct {
